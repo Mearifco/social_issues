@@ -19,13 +19,13 @@ export default function Home() {
         <>
           <Hero onCTAClick={() => setCurrentView('prototype')} />
           <ResearchSection />
-          <EthicalSection />
-          <SolutionSection />
+          {/* <EthicalSection /> */}
+          {/* <SolutionSection /> */}
           
           {/* Footer */}
           <footer className="border-t border-border bg-card py-12 px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-6xl">
-              <div className="grid gap-8 md:grid-cols-3">
+              {/* <div className="grid gap-8 md:grid-cols-3">
                 <div>
                   <h3 className="font-bold text-primary mb-3">SafeSpace Standard Project</h3>
                   <p className="text-sm text-muted-foreground">
@@ -48,9 +48,9 @@ export default function Home() {
                     <li><a href="#" className="hover:text-accent transition-colors">Privacy Policy</a></li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
               <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-                <p>© 2024 SafeGuard Project. All rights reserved.</p>
+                <p>© 2024 SafeSpace Standard Project. All rights reserved.</p>
               </div>
             </div>
           </footer>
