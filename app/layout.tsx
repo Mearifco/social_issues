@@ -8,17 +8,17 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'SafeGuard Project | Online Safety Research & Prototype',
+  title: 'SafeSpace Standard Project | Online Safety Research & Prototype',
   description: 'A comprehensive study on children\'s online safety in the Philippines featuring research insights and an interactive SafeGuard Tiers prototype platform.',
   generator: 'v0.app',
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
+        url: '/icon.png',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/icon-dark-32x32.png',
+        url: '/icon.png',
         media: '(prefers-color-scheme: dark)',
       },
       {
