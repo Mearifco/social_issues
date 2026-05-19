@@ -14,6 +14,8 @@ import {
   Send,
   CheckCircle2
 } from 'lucide-react';
+import { PrototypeDemo } from './prototype-demo';
+import InteractiveDiagram from './interactive-diagram';
 
 const researchItems = [
   {
@@ -50,7 +52,6 @@ We are expecting non-tech-savvy parents to outsmart billion-dollar corporate alg
     id: 'diagram',
     icon: ChartNetwork,
     title: 'Prototype Diagram',
-    image: '/diagram.png', 
   },
   {
     id: 'proposedsolution',
@@ -101,6 +102,31 @@ export function ResearchSection() {
       setTimeout(() => setFeedbackState('idle'), 5000);
     }, 1000);
   };
+
+  const references = [
+    {
+      text: 'International Justice Mission. (2023). The scale of harm: Online sexual abuse and exploitation of children in the Philippines.',
+      url: 'https://www.ijm.org'
+    },
+    {
+      text: 'National Privacy Commission. (2024). Child-oriented transparency and data protection guidelines.',
+      url: 'https://privacy.gov.ph'
+    },
+    {
+      text: 'Republic of the Philippines. (2022). Republic Act No. 11930 (OSAEC Law).',
+      url: 'https://www.officialgazette.gov.ph'
+    },
+    {
+      text: 'Schäfer, R. et al. (2024). Children and malicious user interface design. ACM Proceedings.',
+      url: 'https://doi.org/10.1145/3679318.3685358'
+    },
+    {
+      text: 'UNICEF Philippines. (2021–2025). Online sexual abuse and exploitation of children in the Philippines and related digital safety reports. UNICEF.'
+    },
+    {
+      text: 'UNICEF Philippines – Online Safety and Child Protection'
+    }
+  ];
 
   if (!researchItems || researchItems.length === 0) {
     return (
@@ -154,7 +180,7 @@ export function ResearchSection() {
                   )}
                 </header>
 
-                {item.image && (
+                {item.id === 'diagram' ? <InteractiveDiagram /> : item.image && (
                   <div className="w-full rounded-2xl border border-border overflow-hidden bg-muted/20 mb-8">
                     <img 
                       src={item.image} 
@@ -207,6 +233,15 @@ export function ResearchSection() {
               </article>
             );
           })}
+        </div>
+
+        {/* Interactive Prototype Demo Section */}
+        <div className="my-20 lg:my-28 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 bg-muted/20 py-12 lg:py-16">
+          <div className="mb-8">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-3">Interactive Prototype</h3>
+            <p className="text-muted-foreground">Explore our SafeSpace Standard Tiers Platform in action</p>
+          </div>
+          <PrototypeDemo />
         </div>
 
         {}
@@ -355,6 +390,29 @@ export function ResearchSection() {
               </div>
             </div>
 
+          </div>
+        </section>
+
+        <hr className="my-16 border-border" />
+
+        <section className="mb-20">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl font-bold mb-2">References</h3>
+            <p className="text-muted-foreground">Sources cited in this research.</p>
+          </div>
+          <div className="space-y-4">
+            {references.map((ref, index) => (
+              <div key={index} className="p-4 rounded-lg border border-border bg-card shadow-sm">
+                <p className="text-muted-foreground text-sm">
+                  {ref.text}
+                  {ref.url && (
+                    <a href={ref.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">
+                      {ref.url}
+                    </a>
+                  )}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 

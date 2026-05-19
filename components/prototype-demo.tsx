@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ArrowLeft, AlertTriangle, Lock, Users, ShoppingCart, Shield, ShieldAlert } from 'lucide-react'
+import { AlertTriangle, Lock, Users, ShoppingCart, Shield, ShieldAlert } from 'lucide-react'
 
 // ============================================================================
 // SHARED DATA (You can put this in a constants.ts file)
@@ -44,14 +44,14 @@ const MOCK_APPS = [
 // FILE: components/mobile-frame.tsx
 // ============================================================================
 
-export function RiskMeter({ label, level, icon }) {
+export function RiskMeter({ label, level, icon }: { label: string; level: 'low' | 'medium' | 'high'; icon: React.ReactNode }) {
   const levels = {
     low: { color: 'bg-emerald-500', width: 'w-1/3', text: 'Low' },
     medium: { color: 'bg-amber-500', width: 'w-2/3', text: 'Medium' },
     high: { color: 'bg-rose-500', width: 'w-full', text: 'High' }
   }
 
-  const current = levels[level] || levels.low
+  const current = levels[level as 'low' | 'medium' | 'high'] || levels.low
 
   return (
     <div className="space-y-1.5">
@@ -73,7 +73,7 @@ export function RiskMeter({ label, level, icon }) {
   )
 }
 
-export function MobileFrame({ app }) {
+export function MobileFrame({ app }: { app: typeof MOCK_APPS[0] | null }) {
   if (!app) return null
 
   return (
@@ -139,24 +139,24 @@ export function MobileFrame({ app }) {
                 <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 space-y-4">
                   <RiskMeter
                     label="Privacy Risk"
-                    level={app.risks.privacy}
+                    level={app.risks.privacy as 'low' | 'medium' | 'high'}
                     icon={<Lock className="h-3.5 w-3.5" />}
                   />
                   <RiskMeter
                     label="Predator Risk"
-                    level={app.risks.predator}
+                    level={app.risks.predator as 'low' | 'medium' | 'high'}
                     icon={<Users className="h-3.5 w-3.5" />}
                   />
                   <RiskMeter
                     label="Cyberbullying"
-                    level={app.risks.bullying}
+                    level={app.risks.bullying as 'low' | 'medium' | 'high'}
                     // Since MessageSquare was removed from the app icon import, you can keep using it here if desired,
                     // but for consistency let's use the AlertTriangle as a fallback for the bullying icon here.
                     icon={<AlertTriangle className="h-3.5 w-3.5" />}
                   />
                   <RiskMeter
                     label="Purchase Traps"
-                    level={app.risks.purchase}
+                    level={app.risks.purchase as 'low' | 'medium' | 'high'}
                     icon={<ShoppingCart className="h-3.5 w-3.5" />}
                   />
                 </div>
@@ -188,7 +188,7 @@ export function MobileFrame({ app }) {
 // FILE: components/tier-dashboard.tsx
 // ============================================================================
 
-export function TierDashboard({ apps, selectedApp, onSelect }) {
+export function TierDashboard({ apps, selectedApp, onSelect }: { apps: typeof MOCK_APPS; selectedApp: typeof MOCK_APPS[0]; onSelect: (app: typeof MOCK_APPS[0]) => void }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -199,7 +199,7 @@ export function TierDashboard({ apps, selectedApp, onSelect }) {
       </div>
 
       <div className="space-y-3">
-        {apps.map((app) => (
+        {apps.map((app: typeof MOCK_APPS[0]) => (
           <button
             key={app.id}
             onClick={() => onSelect(app)}
@@ -252,24 +252,17 @@ export function TierDashboard({ apps, selectedApp, onSelect }) {
 // FILE: components/prototype-demo.tsx
 // ============================================================================
 
-export function PrototypeDemo({ onBack }) {
+export function PrototypeDemo() {
   const [selectedApp, setSelectedApp] = useState(MOCK_APPS[0])
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-200">
+    <div className="bg-slate-50 font-sans selection:bg-blue-200 rounded-2xl overflow-hidden border border-slate-200">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors mb-4 group"
-          >
-            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Research
-          </button>
+      <div className="bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">SafeSpace Standard Tiers Platform</h1>
-            <p className="mt-2 text-slate-500 text-lg max-w-2xl">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">SafeSpace Standard Tiers Platform</h2>
+            <p className="mt-2 text-slate-500 text-base max-w-2xl">
               Interactive prototype demonstrating our risk assessment algorithm and community-driven safety platform.
             </p>
           </div>
@@ -300,28 +293,28 @@ export function PrototypeDemo({ onBack }) {
       </div>
 
       {/* Footer Section */}
-      <section className="bg-slate-900 px-4 py-16 sm:px-6 lg:px-8 mt-12">
+      <section className="bg-slate-900 px-4 py-12 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-white mb-10 text-center">How The SafeSpace Standard Works</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-              <div className="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center text-xl font-black mb-4">1</div>
-              <h3 className="font-bold text-white text-lg mb-2">Research & Assessment</h3>
-              <p className="text-slate-400 leading-relaxed">
+          <h3 className="text-xl font-bold text-white mb-8 text-center">How The SafeSpace Standard Works</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-slate-800 p-5 rounded-xl border border-slate-700">
+              <div className="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center text-lg font-black mb-3">1</div>
+              <h4 className="font-bold text-white text-base mb-2">Research & Assessment</h4>
+              <p className="text-slate-400 leading-relaxed text-sm">
                 Expert and community review of app safety across four risk vectors: privacy, predators, bullying, and purchases.
               </p>
             </div>
-            <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-              <div className="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center text-xl font-black mb-4">2</div>
-              <h3 className="font-bold text-white text-lg mb-2">Transparent Tiers</h3>
-              <p className="text-slate-400 leading-relaxed">
+            <div className="bg-slate-800 p-5 rounded-xl border border-slate-700">
+              <div className="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center text-lg font-black mb-3">2</div>
+              <h4 className="font-bold text-white text-base mb-2">Transparent Tiers</h4>
+              <p className="text-slate-400 leading-relaxed text-sm">
                 Apps are categorized into tiers with clear explanations of risks. Not a blacklist, but an educational guide.
               </p>
             </div>
-            <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-              <div className="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center text-xl font-black mb-4">3</div>
-              <h3 className="font-bold text-white text-lg mb-2">Continuous Updates</h3>
-              <p className="text-slate-400 leading-relaxed">
+            <div className="bg-slate-800 p-5 rounded-xl border border-slate-700">
+              <div className="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center text-lg font-black mb-3">3</div>
+              <h4 className="font-bold text-white text-base mb-2">Continuous Updates</h4>
+              <p className="text-slate-400 leading-relaxed text-sm">
                 As threats evolve and new apps emerge, the Trusted Guardians community updates assessments in real-time.
               </p>
             </div>
@@ -330,14 +323,4 @@ export function PrototypeDemo({ onBack }) {
       </section>
     </div>
   )
-}
-
-// ============================================================================
-// CANVAS RUNTIME WRAPPER (Do not copy this to your local files)
-// ============================================================================
-
-export default function App() {
-  const handleBack = () => alert('Would navigate back to research in full app.')
-  
-  return <PrototypeDemo onBack={handleBack} />
 }
