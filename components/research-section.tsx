@@ -17,17 +17,31 @@ import {
 import { PrototypeDemo } from './prototype-demo';
 import InteractiveDiagram from './interactive-diagram';
 
-const researchItems = [
+type ResearchItem = {
+  id: string;
+  icon?: any;
+  title?: string;
+  description?: string;
+  metadata?: {
+    source: string;
+    year: string;
+    author: string;
+  };
+  content?: string;
+  image?: string;
+};
+
+const researchItems: ResearchItem[] = [
   {
     id: 'unicef',
     icon: ShieldAlert,
     title: 'Background of the Issue',
     description: 'The Dangers of the internet for Children in the Philippines',
-    metadata: {
-      source: 'UNICEF Philippines',
-      year: '2019',
-      author: 'Shehzad Nooran'
-    },
+    // metadata: {
+    //   source: 'UNICEF Philippines',
+    //   year: '2019',
+    //   author: 'Shehzad Nooran'
+    // },
     content: `Imagine handing your 10-year-old the keys to a bustling, chaotic city where you don't know the language, the laws, or the dangerous neighborhoods. That’s exactly what happens every time we give a child an unmonitored smartphone. We've traded physical playgrounds for digital ones, but we forgot to build the fences.
 
 In the Philippines, the reality of this digital shift is incredibly stark. According to a recent UNICEF Kids Online study, the average Filipino child is fully navigating the web by age 10. While the internet is a vital tool for their education and socialization, it is also a landscape riddled with hidden traps. Most alarming is a 2023 study by the International Justice Mission (IJM), which highlighted a horrifying statistic: the Philippines ranks second globally in online sexual abuse and exploitation of children (OSAEC), a crisis that surged dramatically during the pandemic.
@@ -105,26 +119,39 @@ export function ResearchSection() {
 
   const references = [
     {
-      text: 'International Justice Mission. (2023). The scale of harm: Online sexual abuse and exploitation of children in the Philippines.',
+      title: 'The scale of harm: Online sexual abuse and exploitation of children in the Philippines',
+      author: 'International Justice Mission',
+      year: '2023',
+      source: 'ijm.org',
       url: 'https://www.ijm.org'
     },
     {
-      text: 'National Privacy Commission. (2024). Child-oriented transparency and data protection guidelines.',
+      title: 'Child-oriented transparency and data protection guidelines',
+      author: 'National Privacy Commission',
+      year: '2024',
+      source: 'privacy.gov.ph',
       url: 'https://privacy.gov.ph'
     },
     {
-      text: 'Republic of the Philippines. (2022). Republic Act No. 11930 (OSAEC Law).',
+      title: 'Republic Act No. 11930 (OSAEC Law)',
+      author: 'Republic of the Philippines',
+      year: '2022',
+      source: 'officialgazette.gov.ph',
       url: 'https://www.officialgazette.gov.ph'
     },
     {
-      text: 'Schäfer, R. et al. (2024). Children and malicious user interface design. ACM Proceedings.',
+      title: 'Children and malicious user interface design',
+      author: 'Schäfer, R. et al.',
+      year: '2024',
+      source: 'ACM Proceedings',
       url: 'https://doi.org/10.1145/3679318.3685358'
     },
     {
-      text: 'UNICEF Philippines. (2021–2025). Online sexual abuse and exploitation of children in the Philippines and related digital safety reports. UNICEF.'
-    },
-    {
-      text: 'UNICEF Philippines – Online Safety and Child Protection'
+      title: 'Online sexual abuse and exploitation of children in the Philippines and related digital safety reports',
+      author: 'UNICEF Philippines',
+      year: '2021–2025',
+      source: 'UNICEF',
+      url: 'https://www.unicef.org/philippines/press-releases/safer-online-environment-every-child'
     }
   ];
 
@@ -162,15 +189,10 @@ export function ResearchSection() {
                     )}
                   </div>
                   
-                  {/* Render Metadata if present (Author, Source, Year) */}
-                  {item.metadata && (
-                    <div className="flex flex-wrap items-center gap-2 text-sm sm:text-base text-muted-foreground mb-4 font-medium bg-muted/30 w-fit px-3 py-1.5 rounded-lg border border-border">
-                      <span className="text-primary">{item.metadata.source}</span>
-                      <span>•</span>
-                      <span>{item.metadata.year}</span>
-                      <span>•</span>
-                      <span className="italic">{item.metadata.author}</span>
-                    </div>
+                  {item.metadata?.author && (
+                    <p className="text-base text-muted-foreground mb-4 font-medium italic">
+                      By {item.metadata.author}
+                    </p>
                   )}
 
                   {item.description && (
@@ -400,17 +422,22 @@ export function ResearchSection() {
             <h3 className="text-2xl font-bold mb-2">References</h3>
             <p className="text-muted-foreground">Sources cited in this research.</p>
           </div>
-          <div className="space-y-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {references.map((ref, index) => (
-              <div key={index} className="p-4 rounded-lg border border-border bg-card shadow-sm">
-                <p className="text-muted-foreground text-sm">
-                  {ref.text}
-                  {ref.url && (
-                    <a href={ref.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">
-                      {ref.url}
+              <div key={index} className="flex flex-col p-6 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex-grow">
+                  <h4 className="font-bold text-base mb-2">{ref.title}</h4>
+                  <p className="text-muted-foreground text-sm mb-4">{ref.author}</p>
+                </div>
+                <div>
+                  {ref.url ? (
+                    <a href={ref.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-sm font-medium">
+                      Source: {ref.source}
                     </a>
+                  ) : (
+                    <p className="text-muted-foreground text-sm font-medium">Source: {ref.source}</p>
                   )}
-                </p>
+                </div>
               </div>
             ))}
           </div>
